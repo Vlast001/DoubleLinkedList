@@ -111,10 +111,12 @@ namespace DoublyList
             cur.Next = tmp;
             _count++;
         }
+
         /// <summary>
-        /// Forward insert
-        /// I used this to insert a range of values correctly
-        /// right now it private method so name "Insert 2" doesn't matter
+        /// Insert special for InsertRange
+        /// I used this to insert a range of values correctly: {1,2,3,4,5} -> {10,-10} = {10, 1, 2, 3, 4, 5, -10}
+        /// right now it private method so name "Insert2" doesn't matter
+        /// P.S. Iteration from the end...InsertLast? InsertBackward ?)
         /// </summary>
         /// <param name="data"></param>
         /// <param name="pos"></param>
@@ -150,6 +152,11 @@ namespace DoublyList
             _count++;
         }
 
+        /// <summary>
+        /// Adding a range of elements at a specified position
+        /// </summary>
+        /// <param name="data"></param>
+        /// <param name="pos"></param>
         public void InsertRange(T[] data, int pos)
         {
             foreach (var item in data)
@@ -192,34 +199,52 @@ namespace DoublyList
             _count--;
         }
 
-        //public bool Delete(T data)
-        //{
-        //    Node<T> current = new Node<T>(data);
-        //    while (current != null)
-        //    {
-        //        if (current.Data.Equals(data))
-        //            break;
-        //        current = current.Next;
-        //    }
+        public void Remove(int pos)
+        {
+            if (pos < 0 || pos > _count)
+                return;
+            if (pos == 0)
+            {
+                PopFront();
+                return;
+            }
+            if (pos == _count-1)
+            {
+                PopBack();
+                return;
+            }
 
-        //    if (current != null)
-        //    {
-        //        if (current.Next != null)
-        //            current.Next.Previous = current.Previous;
-        //        else
-        //            _tail = current.Previous;
+            int i = 0;
+            var del = _head;
 
-        //        if (current.Previous != null)
-        //            current.Previous.Next = current.Next;
-        //        else
-        //            _head = current.Next;
+            while (i<pos)
+            {
+                del = del.Next;
+                i++;
+            }
 
-        //        _count--;
-        //        return true;
-        //    }
+            var prev = del.Previous;
+            var next = del.Next;
+            if (prev != null && _count != 0)
+                prev.Next = next;
+            if (next != null && _count != 0)
+                next.Previous = prev;
 
-        //    return false;
-        //}
+            del = null;
+            _count--;
+        }
+
+        /// <summary>
+        /// Removing a range of elements from a specified position
+        /// </summary>
+        /// <param name="pos"></param>
+        public void RemoveRange(int pos)
+        {
+            while (_count>pos)
+            {
+                Remove(pos);
+            }
+        }
 
         public bool Contains(T data)
         {
@@ -271,7 +296,10 @@ namespace DoublyList
                 current = current.Next;
             }
         }
-
+        /// <summary>
+        /// Upd: try use PrintBackward
+        /// </summary>
+        /// <returns></returns>
         public IEnumerable<T> BackEnumerator()
         {
             Node<T> current = _tail;
