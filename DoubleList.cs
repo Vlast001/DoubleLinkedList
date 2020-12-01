@@ -111,6 +111,52 @@ namespace DoublyList
             cur.Next = tmp;
             _count++;
         }
+        /// <summary>
+        /// Forward insert
+        /// I used this to insert a range of values correctly
+        /// right now it private method so name "Insert 2" doesn't matter
+        /// </summary>
+        /// <param name="data"></param>
+        /// <param name="pos"></param>
+        private void Insert2(T data, int pos)
+        {
+            if (pos < 0 || pos > _count)
+            {
+                return;
+            }
+            if (pos == 0)
+            {
+                AddFirst(data);
+                return;
+            }
+            if (pos == _count)
+            {
+                AddLast(data);
+                return;
+            }
+
+            var tmp = new Node<T>(data);
+            var cur = _tail;
+            for (int i = 0; i < pos - 1; i++)
+            {
+                cur.Data = cur.Data;
+                cur = cur.Previous;
+            }
+
+            tmp.Next = cur;
+            tmp.Previous = cur.Previous;
+            cur.Previous.Next = tmp;
+            cur.Previous = tmp;
+            _count++;
+        }
+
+        public void InsertRange(T[] data, int pos)
+        {
+            foreach (var item in data)
+            {
+                Insert2(item,pos);
+            }
+        }
 
         public void PopFront()
         {

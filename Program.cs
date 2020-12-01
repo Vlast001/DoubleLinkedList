@@ -12,29 +12,49 @@ namespace DoublyList
     {
         static void Main(string[] args)
         {
+            Random rand = new Random();
+            DoubleList<int> d = new DoubleList<int>();
+            List<int> a = new List<int>();
+            for (int i = 0; i < 10; i++)
+            {
+                a.Add(rand.Next(-20,40));
+            }
+
+            foreach (var i in a)
+            {
+                Console.Write($"{i} ");
+            }
+
+            Console.WriteLine();
+            d.AddFirst(-999);
+            d.AddFirst(999);
+            d.PrintForward();
+            d.InsertRange(a.ToArray(),1);
+            d.PrintForward();
+
             //DoubleList<int> dl = new DoubleList<int>(){2,3,4,6,7,9,-2};
             //dl.AddFirst(100);
             //dl.AddLast(-100);
             //dl.PrintForward();
             //dl.PrintBackward();
-            DoubleList<int> doubleList = new DoubleList<int>() { 2,3,4 };
-            doubleList.PrintForward();
-            doubleList.Insert(5,0);
-            //doubleList.PopBack();
-            //doubleList.PopBack();
-            //doubleList.PopBack();
-            //dl1.PopFront();
-            //dl1.PopFront();
-            //dl1.PopFront();
-            doubleList.PrintForward();
-            doubleList.Insert(50,1);
-            doubleList.PrintForward();
-            doubleList.Insert(500,doubleList.Count);
-            doubleList.PrintForward();
-            doubleList.Insert(-999,3);
-            doubleList.PrintForward();
-            //Console.WriteLine(doubleList.Count);
-            doubleList.Clear();
+            //DoubleList<int> doubleList = new DoubleList<int>() { 2,3,4 };
+            //doubleList.PrintForward();
+            //doubleList.Insert(5,0);
+            ////doubleList.PopBack();
+            ////doubleList.PopBack();
+            ////doubleList.PopBack();
+            ////dl1.PopFront();
+            ////dl1.PopFront();
+            ////dl1.PopFront();
+            //doubleList.PrintForward();
+            //doubleList.Insert(50,1);
+            //doubleList.PrintForward();
+            //doubleList.Insert(500,doubleList.Count);
+            //doubleList.PrintForward();
+            //doubleList.Insert(-999,3);
+            //doubleList.PrintForward();
+            ////Console.WriteLine(doubleList.Count);
+            //doubleList.Clear();
 
 
             //foreach (var i in dl)
