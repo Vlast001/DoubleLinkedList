@@ -84,13 +84,26 @@ namespace DoublyList
             //a.PrintForward();
             #endregion
 
-            DoubleList<int> a = new DoubleList<int>(){1,2,3,4,5,6,7,8,9,10};
-            //Console.WriteLine(a.Count);
-            //a.RemoveRange(2,8);
+            #region Sort test and last test:Exeptions
+
+            DoubleList<int> a = new DoubleList<int>() { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+            Console.WriteLine(a.Count);
             a.ReverseSort();
             a.PrintForward();
             a.Sort();
             a.PrintForward();
+            try
+            {
+                //.Insert(100,11); work
+                //a.Remove(11); work
+                a.RemoveRange(5, 11); // exception not work
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            a.PrintForward();
+            #endregion
         }
     }
 }

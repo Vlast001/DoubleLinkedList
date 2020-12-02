@@ -77,7 +77,7 @@ namespace DoublyList
         {
             if (pos < 0 || pos > _count)
             {
-                return;
+                throw new ArgumentOutOfRangeException("Wrong position");
             }
             if (pos == 0)
             {
@@ -117,7 +117,7 @@ namespace DoublyList
         {
             if (pos < 0 || pos > _count)
             {
-                return;
+                throw new ArgumentOutOfRangeException("Wrong position");
             }
             if (pos == 0)
             {
@@ -194,8 +194,10 @@ namespace DoublyList
 
         public void Remove(int pos)
         {
-            if (pos < 0 || pos > _count)
-                return;
+            if (pos < 0 || pos >= _count)
+            {
+                throw new ArgumentOutOfRangeException("Wrong position");
+            }
             if (pos == 0)
             {
                 PopFront();
@@ -233,20 +235,50 @@ namespace DoublyList
         /// <param name="pos"></param>
         public void RemoveRange(int pos)
         {
-            while (_count>pos)
+            try
             {
-                Remove(pos);
+                while (_count>pos)
+                {
+                    Remove(pos);
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                //throw;
             }
         }
         public void RemoveRange(int pos1, int pos2)
         {
-            while (_count > pos2)
+            if (pos1 > pos2)
             {
-                if(pos2+1==pos1)
-                    break;
-                Remove(pos2);
-                pos2--;
+                throw new ArgumentException("pos1 must be < then pos");
             }
+            try
+            {
+                while (_count > pos2)
+                {
+                    if (pos2 + 1 == pos1)
+                        break;
+                    Remove(pos2);
+                        pos2--;
+                }
+            }
+            catch
+            {
+                throw;
+            }
+
+            //try
+            //{
+            //    Remove(pos2);
+            //}
+            //catch
+            //{
+
+            //    throw;
+            //}
+
         }
 
         public bool Contains(T data)
