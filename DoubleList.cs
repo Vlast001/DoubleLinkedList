@@ -261,7 +261,7 @@ namespace DoublyList
             return false;
         }
 
-        public void Sort()
+        public void ReverseSort()
         {
             bool flag = true;
             for (int i = 1; i < _count; i++)
@@ -271,9 +271,66 @@ namespace DoublyList
                 {
                     if (cur.Data.CompareTo(cur.Next.Data) == -1)
                     {
+                        flag = false;
+                        var left = cur.Previous;
+                        var right = cur.Next;
+                        if (left != null)
+                            left.Next = right;
+                        else
+                            _head = right;
 
+                        cur.Next = right.Next;
+                        cur.Previous = right;
+
+                        if (right.Next != null)
+                            right.Next.Previous = cur;
+                        else
+                            _tail = right.Previous;
+
+                        right.Next = cur;
+                        right.Previous = left;
                     }
+                    else
+                        cur = cur.Next;
                 }
+                if(flag)
+                    break;
+            }
+        }
+        public void Sort()
+        {
+            bool flag = true;
+            for (int i = 1; i < _count; i++)
+            {
+                var cur = _head;
+                for (int j = 0; j <= _count - i - 1; j++)
+                {
+                    if (cur.Data.CompareTo(cur.Next.Data) == 1)
+                    {
+                        flag = false;
+                        var left = cur.Previous;
+                        var right = cur.Next;
+                        if (left != null)
+                            left.Next = right;
+                        else
+                            _head = right;
+
+                        cur.Next = right.Next;
+                        cur.Previous = right;
+
+                        if (right.Next != null)
+                            right.Next.Previous = cur;
+                        else
+                            _tail = right.Previous;
+
+                        right.Next = cur;
+                        right.Previous = left;
+                    }
+                    else
+                        cur = cur.Next;
+                }
+                if (flag)
+                    break;
             }
         }
 
