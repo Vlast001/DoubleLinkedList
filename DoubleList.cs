@@ -10,31 +10,11 @@ using System.Threading.Tasks;
 
 namespace DoublyList
 {
-    class DoubleList<T> : IEnumerable<T>
+    public partial class DoubleList<T> : IEnumerable<T>
+        where T : IComparable<T>
     {
-
-        protected class Node<TN>
-        {
-            public TN Data { get; set; }
-            public Node(TN data)
-            {
-                Data = data;
-            }
-            public Node<TN> Next { get; set; }
-            public Node<TN> Previous { get; set; }
-
-            public static bool operator >(Node<TN> a, Node<TN> b)
-            {
-                return a > b;
-            }
-            public static bool operator <(Node<TN> a, Node<TN> b)
-            {
-                return a < b;
-            }
-        }
-
-        private Node<T> _head;
-        private Node<T> _tail;
+        private Node _head;
+        private Node _tail;
         private int _count;
         public int Count => _count;
         public bool IsEmpty => _count == 0;
@@ -52,7 +32,7 @@ namespace DoublyList
         /// <param name="data"></param>
         public void Add(T data)
         {
-            Node<T> node = new Node<T>(data);
+            Node node = new Node(data);
             if (_head == null)
                 _head = node;
             else
@@ -67,7 +47,7 @@ namespace DoublyList
 
         public void AddLast(T data)
         {
-            Node<T> node = new Node<T>(data);
+            Node node = new Node(data);
             if (_head == null)
                 _head = node;
             else
@@ -82,8 +62,8 @@ namespace DoublyList
 
         public void AddFirst(T data)
         {
-            Node<T> node = new Node<T>(data);
-            Node<T> temp = _head;
+            Node node = new Node(data);
+            Node temp = _head;
             node.Next = temp;
             _head = node;
             if (_count == 0)
@@ -110,7 +90,7 @@ namespace DoublyList
                 return;
             }
 
-            var tmp = new Node<T>(data);
+            var tmp = new Node(data);
             var cur = _head;
             for (int i = 0; i < pos-1; i++)
             {
@@ -150,7 +130,7 @@ namespace DoublyList
                 return;
             }
 
-            var tmp = new Node<T>(data);
+            var tmp = new Node(data);
             var cur = _tail;
             for (int i = 0; i < pos - 1; i++)
             {
@@ -271,7 +251,7 @@ namespace DoublyList
 
         public bool Contains(T data)
         {
-            Node<T> current = _head;
+            Node current = _head;
             while (current != null)
             {
                 if (current.Data.Equals(data))
@@ -281,45 +261,21 @@ namespace DoublyList
             return false;
         }
 
-        //public void Sort()
-        //{
-        //    bool flag = true;
-        //    for (int i = 1; i < _count; i++)
-        //    {
-        //        var cur = _head;
-        //        for (int j = 0; j <= _count - i - 1; j++)
-        //        {
-        //            if (cur.Data < cur.Next.Data)
-        //            {
+        public void Sort()
+        {
+            bool flag = true;
+            for (int i = 1; i < _count; i++)
+            {
+                var cur = _head;
+                for (int j = 0; j <= _count - i - 1; j++)
+                {
+                    if (cur.Data.CompareTo(cur.Next.Data) == -1)
+                    {
 
-        //            }
-        //        }
-        //    }
-        //}
-
-        //public static void Sort<T, U>(DoubleList<T> list, Func<T, U> expression)
-        //    where U : IComparable<U>
-        //{
-        //    list.Sort((x, y) => expression.Invoke(x).CompareTo(expression.Invoke(y)));
-        //}
-
-        //    public static bool operator >(T c1, T c2)
-        //    {
-        //        return c1 > c2;
-        //    }
-        ////public static bool operator <(T c1, T c2)
-        //where T: IComparable<T>
-        //{
-        //    return c1 < c2;
-        //}
-
-        //public int CompareTo(T o)
-        //{
-        //    if (o == null)
-        //        return 1;
-        //    Node<T> a = _head;
-        //    return a.Data.Equals(o.)
-        //}
+                    }
+                }
+            }
+        }
 
         public void PrintForward()
         {
@@ -345,14 +301,9 @@ namespace DoublyList
             Console.WriteLine();
         }
 
-        IEnumerator IEnumerable.GetEnumerator()
+        public IEnumerator<T> GetEnumerator()
         {
-            return ((IEnumerable)this).GetEnumerator();
-        }
-
-        IEnumerator<T> IEnumerable<T>.GetEnumerator()
-        {
-            Node<T> current = _head;
+            Node current = _head;
             while (current != null)
             {
                 yield return current.Data;
@@ -360,13 +311,16 @@ namespace DoublyList
             }
         }
 
+        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+
+
         /// <summary>
         /// Upd: try use PrintBackward
         /// </summary>
         /// <returns></returns>
         public IEnumerable<T> BackEnumerator()
         {
-            Node<T> current = _tail;
+            Node current = _tail;
             while (current != null)
             {
                 yield return current.Data;
