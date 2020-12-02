@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Dynamic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Runtime.Remoting.Messaging;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,6 +22,15 @@ namespace DoublyList
             }
             public Node<TN> Next { get; set; }
             public Node<TN> Previous { get; set; }
+
+            public static bool operator >(Node<TN> a, Node<TN> b)
+            {
+                return a > b;
+            }
+            public static bool operator <(Node<TN> a, Node<TN> b)
+            {
+                return a < b;
+            }
         }
 
         private Node<T> _head;
@@ -28,12 +38,14 @@ namespace DoublyList
         private int _count;
         public int Count => _count;
         public bool IsEmpty => _count == 0;
+
         public void Clear()
         {
             _head = null;
             _tail = null;
             _count = 0;
         }
+
         /// <summary>
         /// AddLast for initializer list
         /// </summary>
@@ -52,6 +64,7 @@ namespace DoublyList
             _tail = node;
             _count++;
         }
+
         public void AddLast(T data)
         {
             Node<T> node = new Node<T>(data);
@@ -245,6 +258,16 @@ namespace DoublyList
                 Remove(pos);
             }
         }
+        public void RemoveRange(int pos1, int pos2)
+        {
+            while (_count > pos2)
+            {
+                if(pos2+1==pos1)
+                    break;
+                Remove(pos2);
+                pos2--;
+            }
+        }
 
         public bool Contains(T data)
         {
@@ -257,6 +280,46 @@ namespace DoublyList
             }
             return false;
         }
+
+        //public void Sort()
+        //{
+        //    bool flag = true;
+        //    for (int i = 1; i < _count; i++)
+        //    {
+        //        var cur = _head;
+        //        for (int j = 0; j <= _count - i - 1; j++)
+        //        {
+        //            if (cur.Data < cur.Next.Data)
+        //            {
+
+        //            }
+        //        }
+        //    }
+        //}
+
+        //public static void Sort<T, U>(DoubleList<T> list, Func<T, U> expression)
+        //    where U : IComparable<U>
+        //{
+        //    list.Sort((x, y) => expression.Invoke(x).CompareTo(expression.Invoke(y)));
+        //}
+
+        //    public static bool operator >(T c1, T c2)
+        //    {
+        //        return c1 > c2;
+        //    }
+        ////public static bool operator <(T c1, T c2)
+        //where T: IComparable<T>
+        //{
+        //    return c1 < c2;
+        //}
+
+        //public int CompareTo(T o)
+        //{
+        //    if (o == null)
+        //        return 1;
+        //    Node<T> a = _head;
+        //    return a.Data.Equals(o.)
+        //}
 
         public void PrintForward()
         {
@@ -296,6 +359,7 @@ namespace DoublyList
                 current = current.Next;
             }
         }
+
         /// <summary>
         /// Upd: try use PrintBackward
         /// </summary>
@@ -309,5 +373,6 @@ namespace DoublyList
                 current = current.Previous;
             }
         }
+
     }
 }

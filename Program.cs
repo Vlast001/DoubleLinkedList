@@ -13,27 +13,27 @@ namespace DoublyList
         static void Main(string[] args)
         {
             #region Range tests
-            Random rand = new Random();
-            DoubleList<int> d = new DoubleList<int>();
-            List<int> a = new List<int>();
-            for (int i = 0; i < 10; i++)
-            {
-                a.Add(rand.Next(-20, 40));
-            }
+            //Random rand = new Random();
+            //DoubleList<int> d = new DoubleList<int>();
+            //List<int> a = new List<int>();
+            //for (int i = 0; i < 10; i++)
+            //{
+            //    a.Add(rand.Next(-20, 40));
+            //}
 
-            foreach (var i in a)
-            {
-                Console.Write($"{i} ");
-            }
+            //foreach (var i in a)
+            //{
+            //    Console.Write($"{i} ");
+            //}
 
-            Console.WriteLine();
-            d.AddFirst(-999);
-            d.AddFirst(999);
-            d.PrintForward();
-            d.InsertRange(a.ToArray(), 1);
-            d.PrintForward();
-            d.RemoveRange(1);
-            d.PrintForward();
+            //Console.WriteLine();
+            //d.AddFirst(-999);
+            //d.AddFirst(999);
+            //d.PrintForward();
+            //d.InsertRange(a.ToArray(), 1);
+            //d.PrintForward();
+            //d.RemoveRange(1, d.Count-2);
+            //d.PrintForward();
 
             #endregion
 
@@ -83,6 +83,11 @@ namespace DoublyList
             //Console.WriteLine($"Count: {a.Count}");
             //a.PrintForward();
             #endregion
+
+            DoubleList<int> a = new DoubleList<int>(){1,2,3,4,5,6,7,8,9,10};
+            Console.WriteLine(a.Count);
+            a.RemoveRange(2,8);
+            a.PrintForward();
         }
     }
 }
