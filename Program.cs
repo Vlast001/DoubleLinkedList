@@ -94,9 +94,13 @@ namespace DoublyList
             a.PrintForward();
             try
             {
-                //.Insert(100,11); work
-                //a.Remove(11); work
-                a.RemoveRange(5, 11); // exception not work
+                //exceptions
+                //a.Insert(100,11);
+                //a.Remove(11);
+                //a.RemoveRange(-3);
+
+                // correct 
+                //a.RemoveRange(3, 8);
             }
             catch(Exception e)
             {

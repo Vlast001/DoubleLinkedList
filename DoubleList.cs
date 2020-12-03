@@ -244,41 +244,22 @@ namespace DoublyList
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
-                //throw;
+                //Console.WriteLine(e);
+                throw;
             }
         }
         public void RemoveRange(int pos1, int pos2)
         {
+
+            //if (pos1 > pos2)
+            //{
+            //    throw new ArgumentException("pos1 must be < then pos");
+            //}
             if (pos1 > pos2)
-            {
-                throw new ArgumentException("pos1 must be < then pos");
-            }
-            try
-            {
-                while (_count > pos2)
-                {
-                    if (pos2 + 1 == pos1)
-                        break;
-                    Remove(pos2);
-                        pos2--;
-                }
-            }
-            catch
-            {
-                throw;
-            }
+                (pos1, pos2) = (pos2, pos1);
 
-            //try
-            //{
-            //    Remove(pos2);
-            //}
-            //catch
-            //{
-
-            //    throw;
-            //}
-
+            for (int index = pos2; index >= pos1; index--)
+                Remove(index);
         }
 
         public bool Contains(T data)
